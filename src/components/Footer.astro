@@ -1,0 +1,37 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<footer class="h-20 border-t border-y-zinc-800 mt-10">
+  <div
+    class="max-w-4xl m-auto h-full px-5 xl:px-0 flex items-center justify-between"
+  >
+    <div class="text-sm text-zinc-400 font-bold">
+      <span class="text-xl">&copy;</span>2025 DevInDepth. All rights reserved.
+    </div>
+
+    <div class="flex items-center gap-4 text-zinc-500">
+      <a
+        href="https://github.com/mxpadidar"
+        target="_blank"
+        rel="noopener"
+        title="GitHub"
+        class="flex items-center gap-1 hover:text-zinc-300"
+      >
+        <Icon name="mdi:github" size={18} />
+        <span class="sr-only">GitHub</span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/mxpadidar/"
+        target="_blank"
+        rel="noopener"
+        title="LinkedIn"
+        class="flex items-center gap-1 hover:text-zinc-300"
+      >
+        <Icon name="mdi:linkedin" size={18} />
+        <span class="sr-only">LinkedIn</span>
+      </a>
+    </div>
+  </div>
+</footer>

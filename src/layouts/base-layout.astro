@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--  ubuntu mono font  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>DevInDepth</title>
+  </head>
+  <body class="font-ubuntu-mono bg-zinc-900 text-zinc-300 leading-6">
+    <Header />
+    <main class="min-h-screen max-w-3xl mx-auto px-5">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

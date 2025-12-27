@@ -1,0 +1,20 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<header class="h-20 border-b border-y-zinc-800 mb-5">
+  <nav
+    class="max-w-4xl m-auto px-5 xl:px-0 flex items-center justify-between h-full"
+  >
+    <a href="/" class="flex items-center gap-1 text-blue-400">
+      <Icon name="mdi:code-block-tags" size={50} />
+      <div class="grid text-lg font-bold leading-none">
+        <span class="tracking-widest">DEV</span>
+        <span>InDepth</span>
+      </div>
+    </a>
+    <div class="flex font-bold gap-5 text-lg">
+      <a href="/about" class="hover:tracking-wider">ABOUT</a>
+    </div>
+  </nav>
+</header>

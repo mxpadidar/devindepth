@@ -1,16 +1,29 @@
 ---
-import "../styles/global.css";
+import BaseLayout from "../layouts/base-layout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  </body>
-</html>
+<BaseLayout>
+  <section class="max-w-xl">
+    <h1 class="">Dev In Depth</h1>
+    <p>
+      Dev In Depth is a personal blog focused on backend development and the
+      engineering work that sits behind real applications.
+    </p>
+    <p>
+      I use this space to write about what I read, what I build, and the things
+      I learn while working on APIs, services, and data-driven systems. Some
+      posts are deep dives, others are notes and explanations I write to
+      solidify my understanding.
+    </p>
+    <p>
+      The topics usually revolve around backend architecture, performance,
+      databases, reliability, and the trade-offs that come with designing and
+      maintaining software in production. This is not a collection of polished
+      tutorials — it’s a working notebook shaped by real problems.
+    </p>
+    <p>
+      If you work on the backend, or you care about how systems behave beyond
+      the happy path, you’ll likely find something useful here.
+    </p>
+  </section>
+</BaseLayout>
