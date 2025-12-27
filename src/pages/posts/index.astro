@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/base-layout.astro";
+
+const posts = await getCollection("blogPost", ({ data }) => {
+  return data.draft !== true;
+});
+---
+
+<BaseLayout>
+  {
+    posts.map((post) => (
+      <article class="max-w-lg md:max-w-2xl mb-5 rounded-lg border border-zinc-800 p-5 transition-all">
+        <a href={`/posts/${post.id}/`}>
+          <h4 class="mt-0 md:text-2xl">{post.data.title}</h4>
+          <p class="text-zinc-400 text-sm truncate">{post.data.description}</p>
+          <div class="flex items-center justify-between text-xs text-zinc-500">
+            {post.data.publishedAt && (
+              <time datetime={post.data.publishedAt.toISOString()}>
+                {post.data.publishedAt.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            )}
+
+            {post.data.tags.length > 0 && (
+              <div class="flex gap-2">
+                {post.data.tags.map((tag) => (
+                  <span class="font-alkatra font-bold text-zinc-400 ">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      </article>
+    ))
+  }
+</BaseLayout>

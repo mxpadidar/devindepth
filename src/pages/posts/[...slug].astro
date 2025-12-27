@@ -1,0 +1,35 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/base-layout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blogPost");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<"blogPost">;
+
+const post = Astro.props as Props;
+const { Content } = await render(post);
+---
+
+<BaseLayout>
+  <!-- header -->
+  <section class="mb-5 pb-1 border-b border-zinc-700">
+    <h2>{post.data.title}</h2>
+    <p class="text-zinc-400">{post.data.description}</p>
+    <div class="flex gap-2">
+      {
+        post.data.tags.map((tag) => (
+          <span class="font-alkatra text-zinc-400">#{tag}</span>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- content -->
+  <Content />
+</BaseLayout>
