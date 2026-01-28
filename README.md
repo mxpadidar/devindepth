@@ -1,3 +1,7 @@
 # dev-in-depth
 
-this is a collection of in-depth articles and tutorials on various development topics. The goal is to provide comprehensive guides that help developers understand complex concepts and improve their skills.
+A collection of in-depth articles and tutorials on backend development, software architecture, and core engineering concepts.
+
+The goal of this project is to provide clear, practical explanations that help developers understand complex topics and build better systems.
+
+📚 Read the blog: https://mxpadidar.github.io/devindepth/
