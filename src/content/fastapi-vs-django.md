@@ -53,7 +53,7 @@ async def get_user(user_id: int):
     return user
 ```
 
-Django added async support in version 3.0+, but it's not as deeply integrated. Most Django components (ORM, middleware, views) are still synchronous.
+Django’s async features have rolled out gradually—ASGI support in 3.0, more complete async views in 3.1, and async ORM operations in 4.1+—and many core components (ORM, middleware, views) are still primarily synchronous.
 
 ```python
 # Django - Primarily synchronous
