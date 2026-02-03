@@ -180,7 +180,7 @@ def override_get_db():
 app.dependency_overrides[get_db] = override_get_db
 ```
 
-Django requires more setup for dependency injection and mocking.
+In Django, you typically rely on `unittest.mock`, test utilities (like `override_settings` or custom test databases), and sometimes third-party DI libraries or custom factory functions to swap dependencies, which often results in more manual and verbose setup than FastAPI’s built-in dependency override system.
 
 ## Conclusion
 
