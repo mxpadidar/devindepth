@@ -139,7 +139,7 @@ FastAPI automatically generates interactive API documentation:
 
 This is generated from your code's type hints and requires zero additional configuration.
 
-Django requires third-party packages like `drf-spectacular` or manual documentation.
+When building APIs with Django REST Framework, you typically need third-party packages like `drf-spectacular` or manual documentation, since Django's core views don't generate API docs.
 
 ## Modern Python Features and Best Practices
 
