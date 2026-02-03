@@ -150,7 +150,7 @@ FastAPI embraces modern Python:
 - Dependency injection
 - Dataclasses and Pydantic models
 
-Django maintains backward compatibility with older Python versions, limiting its ability to adopt modern features quickly.
+Django has historically prioritized long‑term stability and gradual evolution, whereas FastAPI was designed from the start around modern Python versions and type‑driven patterns, so new language features tend to show up in FastAPI's ecosystem sooner.
 
 ## Built-in Dependency Injection
 
