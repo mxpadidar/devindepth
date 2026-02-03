@@ -104,26 +104,29 @@ async def create_user(user: User):
     return {"user_id": user.id, "name": user.name}
 ```
 
-Django requires manual serialization and validation:
+With plain Django, you end up doing manual serialization and validation. In practice, most teams add Django REST Framework (DRF):
 
 ```python
-from django.views.decorators.http import require_http_methods
-from django.http import JsonResponse
-import json
+from rest_framework import serializers, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-@require_http_methods(["POST"])
+
+class UserSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    email = serializers.EmailField()
+    age = serializers.IntegerField(required=False)
+
+
+@api_view(["POST"])
 def create_user(request):
-    data = json.loads(request.body)
-    # Manual validation required
-    if 'name' not in data or 'email' not in data:
-        return JsonResponse({"error": "Missing fields"}, status=400)
-    
-    # Manual type checking
-    if not isinstance(data.get('age'), int):
-        return JsonResponse({"error": "Invalid age"}, status=400)
-    
-    # Process user...
-    return JsonResponse({"user_id": 1, "name": data['name']})
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        # Process user...
+        user = {"user_id": 1, **serializer.validated_data}
+        return Response(user, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
 
 ## Interactive API Documentation Out of the Box
