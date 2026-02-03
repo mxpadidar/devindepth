@@ -67,13 +67,13 @@ def get_user(request, user_id):
 
 ## Superior Performance Benchmarks
 
-Independent benchmarks consistently show FastAPI outperforming Django:
+Real-world performance depends heavily on workload, deployment setup, and configuration, but many community benchmarks and case studies indicate that FastAPI can:
 
-- **2-3x faster** for simple JSON responses
-- **5-10x faster** for concurrent I/O-bound operations
-- Lower memory footprint under load
+- respond more quickly for simple JSON responses
+- handle high numbers of concurrent I/O-bound operations more efficiently
+- use less memory under load in many scenarios
 
-For modern APIs that rely heavily on external services, databases, and concurrent requests, this performance difference is significant.
+For example, comparative measurements such as the [TechEmpower Framework Benchmarks](https://www.techempower.com/benchmarks/) can provide a starting point for understanding relative performance, but you should always run benchmarks against your own workloads before making architectural decisions.
 
 ## Automatic Type Hints and Validation
 
