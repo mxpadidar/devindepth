@@ -57,9 +57,12 @@ Django’s async features have rolled out gradually—ASGI support in 3.0, more 
 
 ```python
 # Django - Primarily synchronous
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
+
 def get_user(request, user_id):
     user = User.objects.get(id=user_id)
-    return JsonResponse(user.to_dict())
+    return JsonResponse(model_to_dict(user))
 ```
 
 ## Superior Performance Benchmarks
