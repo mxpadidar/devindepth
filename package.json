@@ -11,7 +11,7 @@
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.6",
+    "astro": "^6.3.8",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.1.18"
   }
