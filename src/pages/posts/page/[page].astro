@@ -1,0 +1,93 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/base-layout.astro";
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 5;
+  const allPosts = (
+    await getCollection("blogPost", ({ data }) => {
+      return data.draft !== true;
+    })
+  ).sort(
+    (a, b) =>
+      (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+  );
+
+  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+
+  return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) => {
+    const currentPage = index + 2;
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        posts: allPosts.slice(startIndex, startIndex + PAGE_SIZE),
+        currentPage,
+        totalPages,
+      },
+    };
+  });
+}
+
+type Props = {
+  posts: CollectionEntry<"blogPost">[];
+  currentPage: number;
+  totalPages: number;
+};
+
+const { posts, currentPage, totalPages } = Astro.props as Props;
+
+const getPageLink = (page: number) =>
+  page === 1 ? "/devindepth/posts/" : `/devindepth/posts/page/${page}/`;
+---
+
+<BaseLayout>
+  {
+    posts.map((post) => (
+      <article class="max-w-lg md:max-w-2xl mb-5 rounded-lg border border-zinc-800 p-5 transition-all">
+        <a href={`/devindepth/posts/${post.id}/`} class="block">
+          <h4 class="mt-0 md:text-2xl">{post.data.title}</h4>
+          <p class="text-zinc-400 text-sm truncate">{post.data.description}</p>
+          <div class="flex items-center justify-between text-xs text-zinc-500">
+            {post.data.publishedAt && (
+              <time datetime={post.data.publishedAt.toISOString()}>
+                {post.data.publishedAt.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            )}
+          </div>
+        </a>
+        {post.data.tags.length > 0 && (
+          <div class="flex gap-2 mt-2">
+            {post.data.tags.map((tag) => (
+              <a
+                href={`/devindepth/posts/tags/${encodeURIComponent(tag)}/`}
+                class="font-alkatra font-bold text-zinc-400"
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        )}
+      </article>
+    ))
+  }
+
+  <nav class="mt-6 flex flex-wrap items-center gap-2">
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      <a
+        href={getPageLink(page)}
+        aria-current={page === currentPage ? "page" : undefined}
+        class={`rounded border px-3 py-1 text-sm ${
+          page === currentPage ? "border-blue-400 text-blue-400" : "border-zinc-700"
+        }`}
+      >
+        {page}
+      </a>
+    ))}
+  </nav>
+</BaseLayout>

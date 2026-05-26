@@ -24,7 +24,12 @@ const { Content } = await render(post);
     <div class="flex gap-2">
       {
         post.data.tags.map((tag) => (
-          <span class="font-alkatra text-zinc-400">#{tag}</span>
+          <a
+            href={`/devindepth/posts/tags/${encodeURIComponent(tag)}/`}
+            class="font-alkatra text-zinc-400"
+          >
+            #{tag}
+          </a>
         ))
       }
     </div>

@@ -1,0 +1,75 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/base-layout.astro";
+
+export async function getStaticPaths() {
+  const allPosts = (
+    await getCollection("blogPost", ({ data }) => {
+      return data.draft !== true;
+    })
+  ).sort(
+    (a, b) =>
+      (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+  );
+
+  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+
+  return uniqueTags.map((tag) => ({
+    params: { tag: encodeURIComponent(tag) },
+    props: {
+      tag,
+      posts: allPosts.filter((post) => post.data.tags.includes(tag)),
+    },
+  }));
+}
+
+type Props = {
+  tag: string;
+  posts: CollectionEntry<"blogPost">[];
+};
+
+const { tag, posts } = Astro.props as Props;
+---
+
+<BaseLayout>
+  <section class="mb-6 border-b border-zinc-700 pb-2">
+    <h2 class="mt-0">Posts tagged #{tag}</h2>
+    <a href="/devindepth/posts/" class="text-sm text-zinc-400">← Back to all posts</a>
+  </section>
+
+  {
+    posts.map((post) => (
+      <article class="max-w-lg md:max-w-2xl mb-5 rounded-lg border border-zinc-800 p-5 transition-all">
+        <a href={`/devindepth/posts/${post.id}/`} class="block">
+          <h4 class="mt-0 md:text-2xl">{post.data.title}</h4>
+          <p class="text-zinc-400 text-sm truncate">{post.data.description}</p>
+          <div class="flex items-center justify-between text-xs text-zinc-500">
+            {post.data.publishedAt && (
+              <time datetime={post.data.publishedAt.toISOString()}>
+                {post.data.publishedAt.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            )}
+          </div>
+        </a>
+        {post.data.tags.length > 0 && (
+          <div class="flex gap-2 mt-2">
+            {post.data.tags.map((postTag) => (
+              <a
+                href={`/devindepth/posts/tags/${encodeURIComponent(postTag)}/`}
+                class={`font-alkatra font-bold ${
+                  postTag === tag ? "text-blue-400" : "text-zinc-400"
+                }`}
+              >
+                #{postTag}
+              </a>
+            ))}
+          </div>
+        )}
+      </article>
+    ))
+  }
+</BaseLayout>

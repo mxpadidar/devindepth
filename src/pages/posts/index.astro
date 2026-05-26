@@ -2,16 +2,29 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/base-layout.astro";
 
-const posts = await getCollection("blogPost", ({ data }) => {
-  return data.draft !== true;
-});
+const PAGE_SIZE = 5;
+
+const allPosts = (
+  await getCollection("blogPost", ({ data }) => {
+    return data.draft !== true;
+  })
+).sort(
+  (a, b) =>
+    (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+);
+
+const posts = allPosts.slice(0, PAGE_SIZE);
+const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+
+const getPageLink = (page: number) =>
+  page === 1 ? "/devindepth/posts/" : `/devindepth/posts/page/${page}/`;
 ---
 
 <BaseLayout>
   {
     posts.map((post) => (
       <article class="max-w-lg md:max-w-2xl mb-5 rounded-lg border border-zinc-800 p-5 transition-all">
-        <a href={`/devindepth/posts/${post.id}/`}>
+        <a href={`/devindepth/posts/${post.id}/`} class="block">
           <h4 class="mt-0 md:text-2xl">{post.data.title}</h4>
           <p class="text-zinc-400 text-sm truncate">{post.data.description}</p>
           <div class="flex items-center justify-between text-xs text-zinc-500">
@@ -24,19 +37,38 @@ const posts = await getCollection("blogPost", ({ data }) => {
                 })}
               </time>
             )}
-
-            {post.data.tags.length > 0 && (
-              <div class="flex gap-2">
-                {post.data.tags.map((tag) => (
-                  <span class="font-alkatra font-bold text-zinc-400 ">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
           </div>
         </a>
+        {post.data.tags.length > 0 && (
+          <div class="flex gap-2 mt-2">
+            {post.data.tags.map((tag) => (
+              <a
+                href={`/devindepth/posts/tags/${encodeURIComponent(tag)}/`}
+                class="font-alkatra font-bold text-zinc-400"
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        )}
       </article>
     ))
+  }
+  {
+    totalPages > 1 && (
+      <nav class="mt-6 flex flex-wrap items-center gap-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={getPageLink(page)}
+            aria-current={page === 1 ? "page" : undefined}
+            class={`rounded border px-3 py-1 text-sm ${
+              page === 1 ? "border-blue-400 text-blue-400" : "border-zinc-700"
+            }`}
+          >
+            {page}
+          </a>
+        ))}
+      </nav>
+    )
   }
 </BaseLayout>
