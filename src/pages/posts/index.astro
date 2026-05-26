@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/base-layout.astro";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 const allPosts = (
   await getCollection("blogPost", ({ data }) => {
@@ -39,9 +39,9 @@ const getPageLink = (page: number) =>
             )}
           </div>
         </a>
-        {post.data.tags.length > 0 && (
+        {(post.data.tags?.length ?? 0) > 0 && (
           <div class="flex gap-2 mt-2">
-            {post.data.tags.map((tag) => (
+            {(post.data.tags ?? []).map((tag) => (
               <a
                 href={`/devindepth/posts/tags/${encodeURIComponent(tag)}/`}
                 class="font-alkatra font-bold text-zinc-400"
