@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/alkatra": "^5.2.8",
+    "@fontsource/ubuntu-mono": "^5.2.8",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^6.3.8",

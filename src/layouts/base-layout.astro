@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -7,11 +8,8 @@ import Footer from "../components/Footer.astro";
 <!doctype html>
 <html lang="en">
   <head>
-    <!--  ubuntu mono font  -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <Font cssVariable="--astro-font-ubuntu-mono" />
+    <Font cssVariable="--astro-font-alkatra" />
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

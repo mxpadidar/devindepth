@@ -17,13 +17,13 @@ pre {
   scrollbar-color: var(--color-zinc-700) var(--color-zinc-500);
 
   code span {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: var(--astro-font-ubuntu-mono);
   }
 }
 
 @theme {
-  --font-ubuntu-mono: "Ubuntu Mono", monospace;
-  --font-alkatra: "Alkatra", system-ui;
+  --font-ubuntu-mono: var(--astro-font-ubuntu-mono);
+  --font-alkatra: var(--astro-font-alkatra);
 }
 
 @layer base {
