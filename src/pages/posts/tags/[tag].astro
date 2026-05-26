@@ -12,13 +12,15 @@ export async function getStaticPaths() {
       (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
   );
 
-  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+  const uniqueTags = [
+    ...new Set(allPosts.flatMap((post) => post.data.tags ?? [])),
+  ];
 
   return uniqueTags.map((tag) => ({
-    params: { tag: encodeURIComponent(tag) },
+    params: { tag },
     props: {
       tag,
-      posts: allPosts.filter((post) => post.data.tags.includes(tag)),
+      posts: allPosts.filter((post) => (post.data.tags ?? []).includes(tag)),
     },
   }));
 }
@@ -55,9 +57,9 @@ const { tag, posts } = Astro.props as Props;
             )}
           </div>
         </a>
-        {post.data.tags.length > 0 && (
+        {(post.data.tags?.length ?? 0) > 0 && (
           <div class="flex gap-2 mt-2">
-            {post.data.tags.map((postTag) => (
+            {(post.data.tags ?? []).map((postTag) => (
               <a
                 href={`/devindepth/posts/tags/${encodeURIComponent(postTag)}/`}
                 class={`font-alkatra font-bold ${
